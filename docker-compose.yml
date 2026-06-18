@@ -1,0 +1,45 @@
+version: '3.8'
+services:
+  career:
+    image: node:24
+    container_name: openclaw-career
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - openclaw-career-data:/root/.openclaw
+      - /home/ipal/agent-fleet/start_agent.sh:/start_agent.sh
+    ports:
+      - '18790:18789'
+    command: /bin/bash /start_agent.sh
+    restart: unless-stopped
+
+  portofolio:
+    image: node:24
+    container_name: openclaw-portofolio
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - openclaw-portofolio-data:/root/.openclaw
+      - /home/ipal/agent-fleet/start_agent.sh:/start_agent.sh
+    ports:
+      - '18791:18789'
+    command: /bin/bash /start_agent.sh
+    restart: unless-stopped
+
+  sensei:
+    image: node:24
+    container_name: openclaw-sensei
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - openclaw-sensei-data:/root/.openclaw
+      - /home/ipal/agent-fleet/start_agent.sh:/start_agent.sh
+    ports:
+      - '18792:18789'
+    command: /bin/bash /start_agent.sh
+    restart: unless-stopped
+
+volumes:
+  openclaw-career-data:
+  openclaw-portofolio-data:
+  openclaw-sensei-data:

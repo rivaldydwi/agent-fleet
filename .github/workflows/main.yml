@@ -8,13 +8,19 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+
     steps:
+      - name: Connect Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          authkey: ${{ secrets.TAILSCALE_AUTHKEY }}
+
       - name: SSH and pull latest changes
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          host: ${{ secrets.LOCAL_HOST }}
+          username: ${{ secrets.LOCAL_USER }}
+          key: ${{ secrets.LOCAL_SSH_KEY }}
           script: |
             cd ~/agent-fleet
             git pull origin main
